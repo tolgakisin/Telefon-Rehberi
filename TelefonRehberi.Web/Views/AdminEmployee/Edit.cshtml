@@ -1,0 +1,68 @@
+﻿@model TelefonRehberi.Data.Models.Employee
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminMainView.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "AdminEmployee", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+    @Html.HiddenFor(model => model.employeeID); // ???
+
+<fieldset>
+    <legend>Employees</legend>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, "Name" ,htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-12">
+            @Html.TextBoxFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.surname,"Surname", new { @class = "control-label col-md-2" })
+
+        <div class="col-md-12">
+            @Html.TextBoxFor(model => model.surname)
+            @Html.ValidationMessageFor(model => model.surname, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.phone,"Phone", new { @class = "control-label col-md-2" })
+
+        <div class="col-md-12">
+            @Html.TextBoxFor(model => model.phone, new { type = "number" })
+            @Html.ValidationMessageFor(model => model.phone, "", new { @class = "text-danger", @type = "number" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.departmentID, "DepartmentList", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.DropDownListFor(model => model.departmentID, (SelectList)ViewBag.DepartmentList, "Select Department...", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.departmentID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.managerID, "ManagerList", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-12">
+            @Html.DropDownListFor(model => model.managerID, (SelectList)ViewBag.ManagerList, "Select Manager...", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.managerID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="col-md-3">
+        <br />
+        <button type="submit" class="btn btn-block btn-primary btn-lg">Edit Employee</button>
+    </div>
+
+</fieldset>
+}

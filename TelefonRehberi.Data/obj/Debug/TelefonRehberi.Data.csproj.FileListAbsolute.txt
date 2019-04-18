@@ -1,0 +1,12 @@
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\TelefonRehberi.Data.dll.config
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\TelefonRehberi.Data.dll
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\TelefonRehberi.Data.pdb
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\EntityFramework.dll
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\EntityFramework.xml
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\obj\Debug\TelefonRehberi.Data.csprojAssemblyReference.cache
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\obj\Debug\TelefonRehberi.Data.csproj.CoreCompileInputs.cache
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\obj\Debug\TelefonRehberi.Data.csproj.CopyComplete
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\obj\Debug\TelefonRehberi.Data.dll
+C:\Users\tolga\source\repos\TelefonRehberi.Web\TelefonRehberi.Data\obj\Debug\TelefonRehberi.Data.pdb

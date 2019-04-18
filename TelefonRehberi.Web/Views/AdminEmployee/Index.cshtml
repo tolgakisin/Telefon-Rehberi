@@ -1,0 +1,143 @@
+﻿@model PagedList.IPagedList<TelefonRehberi.Data.Models.Employee>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminMainView.cshtml";
+}
+<h2>Employees</h2>
+
+<br />
+
+<div class="modal modal-danger fade" id="modal-danger">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Delete Employee</h4>
+            </div>
+            <div class="modal-body">
+                <p class="delete-message"></p>
+                <p class="delete-error"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline pull-left" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline delete-employee">Delete</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<div class="col-lg-12 mt-5">
+    <div class="row">
+        <div class="col-md-3">
+            <a href="/AdminEmployee/Create" class="btn btn-block btn-success">Add Employee</a>
+        </div>
+    </div>
+    <br />
+    @using (Html.BeginForm("Index", "AdminEmployee", FormMethod.Get)) {
+        <p>
+            Find employee by name, surname or phone : @Html.TextBox("q", ViewBag.CurrentFilter as string, new { @class = "", placeholder = "Search on homepage" })
+            <input type="submit" value="Search  " />
+        </p>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="fc-header-title">Employees</h4>
+
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class="text-uppercase bg-primary">
+                        <tr class="text-white">
+
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Manager</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model) {
+                            <tr>
+                                <td><a href="/AdminEmployee/Details/@item.employeeID">@Html.Raw(item.name + " " + item.surname)</a></td>
+                                <td>@item.phone</td>
+                                <td>
+                                    @if (item.departmentID != null) {
+                                        @item.Department.name
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.managerID != null) {
+                                        string name = "";
+                                        string surname = "";
+                                        using (TelefonRehberi.Data.Models.TelefonRehberiEntities ctx = new TelefonRehberi.Data.Models.TelefonRehberiEntities()) {
+                                            name = ctx.Employee.FirstOrDefault(x => x.employeeID == item.managerID).name;
+                                            surname = ctx.Employee.FirstOrDefault(x => x.employeeID == item.managerID).surname;
+                                        }                                       
+                                        @Html.Raw(name + " " +surname);                                       
+                                    }
+                                </td>
+
+                                <td><a href="/AdminEmployee/Edit/@item.employeeID" class="btn btn-success">Edit</a></td>
+                                <td>
+                                    <button type="button" class="btn btn-danger open-modal" data-employeeid="@item.employeeID" data-employeename="@item.name @item.surname" data-toggle="modal" data-target="#modal-danger">Delete</button>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="pagedList">
+        @Html.PagedListPager(Model, page => Url.Action("Index",
+            new { page, currentFilter = ViewBag.CurrentFilter }))
+    </div>
+</div>
+
+
+@section scripts{
+    <script src="/Content/Admin/bower_components/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(".open-modal").click(function () {
+            var employeeName = $(this).data("employeename");
+            $(".modal-body>p.delete-message").html("Do you want to delete the employee named " + "<strong>" + employeeName + "</strong>?");
+            var employeeID = $(this).data("employeeid");
+            $(".delete-employee").data("employeeid", employeeID);
+            //console.log(employeeID);
+        });
+
+        $(".delete-employee").click(function () {
+            var employeeID = $(this).data("employeeid");
+
+            $.ajax({
+                type: "POST",
+                url: "/AdminEmployee/Delete/" + employeeID,
+                success: function (state) {
+                    if (state == "success") {
+                        window.location.replace("/AdminEmployee/Index");
+                    }
+                    else if (state == "error") {
+                        $(".modal-body>p.delete-error").html("Something went wrong.");
+                    }
+                    else {
+                        alert("The employee has not been deleted due to being manager");
+                    }
+                }
+            })
+        });
+
+
+    </script>
+
+}

@@ -1,0 +1,82 @@
+﻿@model TelefonRehberi.Data.Models.Department
+@{
+    // IEnumerable<TelefonRehberi.Data.Models.Employee> empList = ViewBag.EmployeeListUnderOfDepartment;
+    IEnumerable<TelefonRehberi.Data.Models.Employee> empList = ViewBag.EmployeeManager;
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminMainView.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "AdminDepartment", FormMethod.Post)) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <legend>Departments</legend>
+    <div class="form-group">
+        @Html.LabelFor(model => model.name, "Department", htmlAttributes: new { @class = "control-label col-md-2" })
+
+        <div class="col-md-12">
+            @Html.TextBoxFor(model => model.name)
+            @Html.ValidationMessageFor(model => model.name)
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <br />
+        <button type="submit" class="btn btn-block btn-primary btn-lg">Edit Department</button>
+    </div>
+}
+
+
+<div class="col-lg-12 mt-5">
+
+    <div class="card">
+        <div class="card-body">
+            <h4 class="fc-header-title">Employees</h4>
+
+            <div class="table-responsive">
+                <table class="table text-center">
+                    <thead class="text-uppercase bg-primary">
+                        <tr class="text-white">
+
+                            <th scope="col">Name</th>
+                            <th scope="col">Phone</th>
+                            <th scope="col">Department</th>
+                            <th scope="col">Manager</th>
+                            <th scope="col">Edit</th>
+                            <th scope="col">Delete</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in empList) {
+                            if (item.departmentID == Model.departmentID) {
+                                <tr>
+                                    <td><a href="/AdminEmployee/Details/@item.employeeID">@Html.Raw(item.name + " " + item.surname)</a></td>
+                                    <td>@item.phone</td>
+                                    
+                                    <td>@item.Department.name</td>
+
+                                    <td>
+                                        @if (item.managerID != null) {
+                                            @Html.Raw(empList.FirstOrDefault(x => x.employeeID == item.managerID).name + " " + empList.FirstOrDefault(x => x.employeeID == item.managerID).surname);
+                                        }
+                                    </td>
+
+                                    <td><a href="/AdminEmployee/Edit/@item.employeeID" class="btn btn-success">Edit</a></td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger open-modal" data-employeeid="@item.employeeID" data-employeename="@item.name @item.surname" data-toggle="modal" data-target="#modal-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            }
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>

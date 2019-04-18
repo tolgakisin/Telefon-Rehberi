@@ -1,0 +1,93 @@
+﻿@model TelefonRehberi.Data.Models.Employee
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminMainView.cshtml";
+}
+
+<h2>Details</h2>
+
+<div class="container emp-profile">
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-img">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt="" />
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="profile-head">
+                <h5>
+                    @Html.Raw(Model.name + " " + Model.surname)
+                </h5>
+                <h6>
+                    Software Engineer in ...
+                </h6>
+
+            </div>
+        </div>
+        <div class="col-md-2">
+            <a href="@Url.Action("Edit","AdminEmployee",new { id = Model.employeeID})"><input type="button" class="profile-edit-btn" name="btnAddMore" value="Edit Profile" /></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+
+        </div>
+        <div class="col-md-8">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Model.name</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Surname</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Model.surname</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>Phone</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>@Model.phone</p>
+                        </div>
+                    </div>
+                    @if (Model.departmentID != null) {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Department</label>
+                            </div>
+
+                            <div class="col-md-6">
+                                <p>@Model.Department.name</p>
+                            </div>
+
+
+                        </div>
+                    }
+                    @if (Model.managerID != null) {
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Manager</label>
+                            </div>
+                            <div class="col-md-6">
+                                <p>@ViewBag.ManagerName</p>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
